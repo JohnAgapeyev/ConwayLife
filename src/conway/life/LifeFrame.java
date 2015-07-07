@@ -14,7 +14,7 @@ public class LifeFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(new LifePanel());
         setExtendedState(MAXIMIZED_BOTH);
-//        setUndecorated(true);
+        setUndecorated(true);
         setVisible(true);
     }
 

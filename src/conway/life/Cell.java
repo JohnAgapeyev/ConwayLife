@@ -1,5 +1,7 @@
 package conway.life;
 
+import java.util.List;
+
 public class Cell {
 
     private static final int cellSize = 10;
@@ -20,6 +22,10 @@ public class Cell {
 
     public void setEnabledState(boolean enabledState) {
         this.enabledState = enabledState;
+    }
+
+    public void nextGeneration(List<Boolean> neighbours) {
+
     }
 
 }
