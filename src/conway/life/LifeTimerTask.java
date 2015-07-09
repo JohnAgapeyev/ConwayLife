@@ -4,7 +4,7 @@ import java.util.TimerTask;
 
 public class LifeTimerTask extends TimerTask {
     
-    GridPanel grid;
+    private GridPanel grid;
     
     public LifeTimerTask(GridPanel grid) {
         this.grid = grid;

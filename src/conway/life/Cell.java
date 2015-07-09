@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cell {
 
-    private static final int cellSize = 10;
+    private static final int cellSize = 30;
 
     private boolean state;
 
@@ -37,12 +37,8 @@ public class Cell {
     }
 
     public void nextGeneration() {
-
-//        final long living = neighbours.stream().map(cell -> cell.getState())
-//                .filter(state -> state == true).count();
-        
-         final int living = Collections.frequency(neighbours,
-         Boolean.valueOf(true));
+        final int living = Collections.frequency(neighbours,
+                Boolean.valueOf(true));
 
         if (living < 2 || living > 3) {
             state = false;

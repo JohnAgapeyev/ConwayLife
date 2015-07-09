@@ -5,22 +5,30 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 public class LifeMouseListener implements MouseMotionListener, MouseListener {
 
-    GridPanel grid;
+    private final GridPanel grid;
 
-    List<List<Cell>> cells;
+    // private final MenuPanel menu;
 
-    int cellSize = Cell.getCellSize();
+    private List<List<Cell>> cells;
+
+    private int cellSize = Cell.getCellSize();
+
+    private LifeTimer timer;
 
     public LifeMouseListener(GridPanel grid) {
         this.grid = grid;
+        // this.menu = menu;
         cells = grid.getCells();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        cells.get(e.getX() / cellSize).get(e.getY() / cellSize).setState(true);
+        cells.get(e.getX() / cellSize).get(e.getY() / cellSize)
+                .setState(!SwingUtilities.isRightMouseButton(e));
         grid.repaint();
     }
 
@@ -41,7 +49,6 @@ public class LifeMouseListener implements MouseMotionListener, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 

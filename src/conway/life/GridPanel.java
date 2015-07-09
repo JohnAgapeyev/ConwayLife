@@ -36,8 +36,9 @@ public class GridPanel extends JPanel {
             cells.add(column);
         }
         setNeighbours();
-        addMouseListener(new LifeMouseListener(this));
-        addMouseMotionListener(new LifeMouseListener(this));
+        LifeMouseListener listener = new LifeMouseListener(this);
+        addMouseListener(listener);
+        addMouseMotionListener(listener);
     }
 
     public void random() {
@@ -49,6 +50,7 @@ public class GridPanel extends JPanel {
             }
             cells.add(column);
         }
+        setNeighbours();
         repaint();
     }
 
@@ -56,18 +58,17 @@ public class GridPanel extends JPanel {
         List<Boolean> neighbours;
         for (int a = 0; a < cells.size(); a++) {
             for (int b = 0; b < cells.get(a).size(); b++) {
-                neighbours = new ArrayList<>();
+                neighbours = new ArrayList<>(8);
                 for (int c = -1; c < 2; c++) {
                     for (int d = -1; d < 2; d++) {
                         if (c == 0 && d == 0) {
                             continue;
                         } else {
-                            try {
+                            if (a + c >= 0 && b + d >= 0 && a + c < cells.size()
+                                    && b + d < cells.get(a).size()) {
                                 neighbours.add(
                                         cells.get(a + c).get(b + d).getState());
-                            } catch (IndexOutOfBoundsException e) {
-                                neighbours.add(new Boolean(false));
-                            }
+                            } 
                         }
                     }
                 }

@@ -14,21 +14,21 @@ public class MenuPanel extends JPanel {
 
     private final JButton startButton;
     private final JButton nextButton;
+    private final JButton randButton;
     private final JButton exitButton;
 
     private final LifeTimer timer;
 
     public MenuPanel(GridPanel grid) {
-        setBackground(Color.red);
+        setBackground(Color.lightGray);
         startButton = new JButton("Start");
         nextButton = new JButton("Next");
+        randButton = new JButton("Randomize");
         exitButton = new JButton("Exit");
 
         timer = new LifeTimer(grid);
 
-        startButton.addActionListener(ae -> grid.random());
-
-        nextButton.addActionListener(ae -> {
+        startButton.addActionListener(ae -> {
             if (timer.getTimerActive()) {
                 timer.stop();
             } else {
@@ -36,11 +36,22 @@ public class MenuPanel extends JPanel {
             }
         });
 
+        nextButton.addActionListener(ae -> {
+            timer.getTask().run();
+        });
+
+        randButton.addActionListener(ae -> grid.random());
+
         exitButton.addActionListener(ae -> System.exit(0));
 
         add(startButton);
         add(nextButton);
+        add(randButton);
         add(exitButton);
+    }
+    
+    public LifeTimer getTimer() {
+        return timer;
     }
 
 }

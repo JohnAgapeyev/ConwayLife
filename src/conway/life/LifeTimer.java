@@ -4,18 +4,18 @@ import java.util.Timer;
 
 public class LifeTimer extends Timer {
 
-    LifeTimerTask updateTask;
+    private LifeTimerTask updateTask;
 
-    private boolean timerEnabled;
-    
-    private long timerPeriod = 10;
+    private boolean timerActive;
 
-    GridPanel grid;
+    private long timerPeriod = 100;
+
+    private GridPanel grid;
 
     public LifeTimer(GridPanel grid) {
         updateTask = new LifeTimerTask(grid);
         this.grid = grid;
-        timerEnabled = false;
+        timerActive = false;
     }
 
     public void start() {
@@ -25,16 +25,20 @@ public class LifeTimer extends Timer {
             updateTask = new LifeTimerTask(grid);
             scheduleAtFixedRate(updateTask, 0, timerPeriod);
         } finally {
-            timerEnabled = true;
+            timerActive = true;
         }
     }
 
     public void stop() {
         updateTask.cancel();
-        timerEnabled = false;
+        timerActive = false;
     }
 
     public boolean getTimerActive() {
-        return timerEnabled;
+        return timerActive;
+    }
+
+    public LifeTimerTask getTask() {
+        return updateTask;
     }
 }
