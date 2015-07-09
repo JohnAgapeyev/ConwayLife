@@ -37,13 +37,17 @@ public class Cell {
     }
 
     public void nextGeneration() {
-        final int living = Collections.frequency(neighbours,
-                Boolean.valueOf(true));
+
+//        final long living = neighbours.stream().map(cell -> cell.getState())
+//                .filter(state -> state == true).count();
+        
+         final int living = Collections.frequency(neighbours,
+         Boolean.valueOf(true));
+
         if (living < 2 || living > 3) {
             state = false;
         } else if (living == 3) {
             state = true;
         }
     }
-
 }

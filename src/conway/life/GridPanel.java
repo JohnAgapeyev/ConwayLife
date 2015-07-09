@@ -31,49 +31,28 @@ public class GridPanel extends JPanel {
         for (int i = 0; i < widthCellCount; i++) {
             List<Cell> column = new ArrayList<>();
             for (int j = 0; j < heightCellCount; j++) {
+                column.add(new Cell(false));
+            }
+            cells.add(column);
+        }
+        setNeighbours();
+        addMouseListener(new LifeMouseListener(this));
+        addMouseMotionListener(new LifeMouseListener(this));
+    }
+
+    public void random() {
+        cells = new ArrayList<>();
+        for (int i = 0; i < widthCellCount; i++) {
+            List<Cell> column = new ArrayList<>();
+            for (int j = 0; j < heightCellCount; j++) {
                 column.add(new Cell(new Random().nextBoolean()));
             }
             cells.add(column);
         }
-
-        List<Boolean> neighbours;
-        for (int a = 0; a < cells.size(); a++) {
-            for (int b = 0; b < cells.get(a).size(); b++) {
-                neighbours = new ArrayList<>();
-                for (int c = -1; c < 2; c++) {
-                    for (int d = -1; d < 2; d++) {
-                        if (c == 0 && d == 0) {
-                            continue;
-                        } else {
-                            try {
-                                neighbours.add(
-                                        cells.get(a + c).get(b + d).getState());
-                            } catch (IndexOutOfBoundsException e) {
-                                neighbours.add(new Boolean(false));
-                            }
-                        }
-                    }
-                }
-                cells.get(a).get(b).setNeighbours(neighbours);
-            }
-        }
-
+        repaint();
     }
 
-    public void random() {
-
-        // cells = new ArrayList<>();
-        // for (int i = 0; i < widthCellCount; i++) {
-        // List<Cell> column = new ArrayList<>();
-        // for (int j = 0; j < heightCellCount; j++) {
-        // column.add(new Cell(new Random().nextBoolean()));
-        // }
-        // cells.add(column);
-        // }
-        // repaint();
-    }
-
-    public void getNeighbours() {
+    public void setNeighbours() {
         List<Boolean> neighbours;
         for (int a = 0; a < cells.size(); a++) {
             for (int b = 0; b < cells.get(a).size(); b++) {

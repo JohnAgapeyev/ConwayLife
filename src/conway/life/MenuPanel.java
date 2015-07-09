@@ -16,19 +16,24 @@ public class MenuPanel extends JPanel {
     private final JButton nextButton;
     private final JButton exitButton;
 
+    private final LifeTimer timer;
+
     public MenuPanel(GridPanel grid) {
         setBackground(Color.red);
         startButton = new JButton("Start");
         nextButton = new JButton("Next");
         exitButton = new JButton("Exit");
 
+        timer = new LifeTimer(grid);
+
         startButton.addActionListener(ae -> grid.random());
 
         nextButton.addActionListener(ae -> {
-            grid.getNeighbours();
-            grid.getCells().forEach(
-                    column -> column.forEach(cell -> cell.nextGeneration()));
-            grid.repaint();
+            if (timer.getTimerActive()) {
+                timer.stop();
+            } else {
+                timer.start();
+            }
         });
 
         exitButton.addActionListener(ae -> System.exit(0));
