@@ -9,56 +9,53 @@ import javax.swing.SwingUtilities;
 
 public class LifeMouseListener implements MouseMotionListener, MouseListener {
 
-    private final GridPanel grid;
+    private final LifePanel lifePanel;
 
-    // private final MenuPanel menu;
+    private final List<List<Cell>> cells;
 
-    private List<List<Cell>> cells;
+    private final int cellSize = Cell.getCellSize();
 
-    private int cellSize = Cell.getCellSize();
-
-    private LifeTimer timer;
-
-    public LifeMouseListener(GridPanel grid) {
-        this.grid = grid;
-        // this.menu = menu;
-        cells = grid.getCells();
+    public LifeMouseListener(final LifePanel lifePanel) {
+        this.lifePanel = lifePanel;
+        cells = lifePanel.getCells();
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        cells.get(e.getX() / cellSize).get(e.getY() / cellSize)
-                .setState(!SwingUtilities.isRightMouseButton(e));
-        grid.repaint();
+    public void mouseDragged(final MouseEvent e) {
+        if (e.getY() >= 0 && !lifePanel.getTimer().getTimerActive()) {
+            cells.get(e.getX() / cellSize).get(e.getY() / cellSize)
+                    .setState(!SwingUtilities.isRightMouseButton(e));
+            lifePanel.repaint();
+        }
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseMoved(final MouseEvent e) {
 
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mouseClicked(final MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(final MouseEvent e) {
         mouseDragged(e);
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(final MouseEvent e) {
 
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(final MouseEvent e) {
 
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(final MouseEvent e) {
 
     }
 

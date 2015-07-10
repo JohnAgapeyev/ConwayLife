@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cell {
 
-    private static final int cellSize = 30;
+    private static final int cellSize = 10;
 
     private boolean state;
 
@@ -16,7 +16,7 @@ public class Cell {
         state = false;
     }
 
-    public Cell(boolean value) {
+    public Cell(final boolean value) {
         state = value;
     }
 
@@ -28,11 +28,11 @@ public class Cell {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(final boolean state) {
         this.state = state;
     }
 
-    public void setNeighbours(List<Boolean> neighbours) {
+    public void setNeighbours(final List<Boolean> neighbours) {
         this.neighbours = neighbours;
     }
 
