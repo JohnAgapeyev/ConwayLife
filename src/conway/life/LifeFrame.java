@@ -2,13 +2,22 @@ package conway.life;
 
 import javax.swing.JFrame;
 
+/**
+ * Frame for the program.
+ *
+ * @author John Agapeyev
+ *
+ */
 public class LifeFrame extends JFrame {
 
     /**
-     * Serial ID for the frame.
+     * Serial ID.
      */
-    private static final long serialVersionUID = 154602988047161157L;
+    private static final long serialVersionUID = -5004002945226567786L;
 
+    /**
+     * Frame constructor.
+     */
     public LifeFrame() {
         super("The Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -18,6 +27,12 @@ public class LifeFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Method called when the program launches.
+     *
+     * @param args
+     *            Command line arguments
+     */
     public static void main(final String[] args) {
         new LifeFrame();
     }

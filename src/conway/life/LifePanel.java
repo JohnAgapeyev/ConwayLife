@@ -12,29 +12,53 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * Panel for the program.
+ *
+ * @author John Agapeyev
+ *
+ */
 public class LifePanel extends JPanel {
 
     /**
-     * Serial ID for the panel.
+     * Serial ID.
      */
-    private static final long serialVersionUID = 5894984420121210194L;
+    private static final long serialVersionUID = 4467159917692364446L;
 
+    /**
+     * The size of the user's screen.
+     */
     private static final Dimension size = Toolkit.getDefaultToolkit()
             .getScreenSize();
 
-    private final int cellSize = Cell.getCellSize();
+    /**
+     * Size of each individual cell.
+     */
+    private static final int cellSize = Cell.getCellSize();
+
+    /**
+     * Number of cells that can fit the width of the screen.
+     */
     private final int widthCellCount = (int) size.getWidth() / cellSize + 1;
+
+    /**
+     * Number of cells that can fit the height of the screen.
+     */
     private final int heightCellCount = (int) size.getHeight() / cellSize + 1;
 
-    private List<List<Cell>> cells = new ArrayList<>();
+    /**
+     * 2D list of cells.
+     */
+    private List<List<Cell>> cells = new ArrayList<>(widthCellCount);
 
-    private final JButton startButton;
-    private final JButton nextButton;
-    private final JButton randButton;
-    private final JButton exitButton;
-
+    /**
+     * Timer for the panel.
+     */
     private final LifeTimer timer;
 
+    /**
+     * Constructor for the panel.
+     */
     public LifePanel() {
         setLayout(new BorderLayout());
         for (int i = 0; i < widthCellCount; i++) {
@@ -51,10 +75,10 @@ public class LifePanel extends JPanel {
 
         final JPanel menu = new JPanel();
         menu.setBackground(Color.lightGray);
-        startButton = new JButton("Start");
-        nextButton = new JButton("Next");
-        randButton = new JButton("Randomize");
-        exitButton = new JButton("Exit");
+        final JButton startButton = new JButton("Start");
+        final JButton nextButton = new JButton("Next");
+        final JButton randButton = new JButton("Randomize");
+        final JButton exitButton = new JButton("Exit");
 
         timer = new LifeTimer(this);
 
@@ -89,6 +113,9 @@ public class LifePanel extends JPanel {
 
     }
 
+    /**
+     * Randomly generates a starting board.
+     */
     public void random() {
         cells = new ArrayList<>();
         for (int i = 0; i < widthCellCount; i++) {
@@ -102,6 +129,10 @@ public class LifePanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Sets the neighbours for every cell. It iterates through all adjacent
+     * cells and adds them to a list which is sent to the cell for counting.
+     */
     public void setNeighbours() {
         List<Boolean> neighbours;
         for (int a = 0; a < cells.size(); a++) {
@@ -125,6 +156,9 @@ public class LifePanel extends JPanel {
         }
     }
 
+    /**
+     * Paint method for the panel.
+     */
     @Override
     public void paintComponent(final Graphics g) {
         super.paintComponent(g);
@@ -142,10 +176,20 @@ public class LifePanel extends JPanel {
         }
     }
 
+    /**
+     * Getter Method.
+     *
+     * @return All the cells.
+     */
     public List<List<Cell>> getCells() {
         return cells;
     }
 
+    /**
+     * Getter Method
+     *
+     * @return The timer for the program.
+     */
     public LifeTimer getTimer() {
         return timer;
     }
