@@ -62,5 +62,4 @@ public class LifeMouseListener extends MouseAdapter
     public void mousePressed(final MouseEvent e) {
         mouseDragged(e);
     }
-
 }

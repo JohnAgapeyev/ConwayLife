@@ -69,6 +69,7 @@ public class LifePanel extends JPanel {
             cells.add(column);
         }
         setNeighbours();
+
         final LifeMouseListener listener = new LifeMouseListener(this);
         addMouseListener(listener);
         addMouseMotionListener(listener);
@@ -110,18 +111,19 @@ public class LifePanel extends JPanel {
         menu.add(exitButton);
 
         add(menu, BorderLayout.NORTH);
-
     }
 
     /**
      * Randomly generates a starting board.
      */
     public void random() {
-        cells = new ArrayList<>();
+        cells = new ArrayList<>(widthCellCount);
+        List<Cell> column = new ArrayList<>(heightCellCount);
+        final Random rand = new Random();
         for (int i = 0; i < widthCellCount; i++) {
-            final List<Cell> column = new ArrayList<>();
+            column = new ArrayList<>(heightCellCount);
             for (int j = 0; j < heightCellCount; j++) {
-                column.add(new Cell(new Random().nextBoolean()));
+                column.add(new Cell(rand.nextBoolean()));
             }
             cells.add(column);
         }
@@ -135,16 +137,21 @@ public class LifePanel extends JPanel {
      */
     public void setNeighbours() {
         List<Boolean> neighbours;
-        for (int a = 0; a < cells.size(); a++) {
-            for (int b = 0; b < cells.get(a).size(); b++) {
+        for (int a = 0; a < widthCellCount; a++) {
+            for (int b = 0; b < heightCellCount; b++) {
                 neighbours = new ArrayList<>(8);
                 for (int c = -1; c < 2; c++) {
                     for (int d = -1; d < 2; d++) {
                         if (c == 0 && d == 0) {
                             continue;
                         } else {
-                            if (a + c >= 0 && b + d >= 0 && a + c < cells.size()
-                                    && b + d < cells.get(a).size()) {
+                            /*
+                             * Checks to make sure everything is in bounds and
+                             * won't cause an exception before being added.
+                             */
+                            if (a + c >= 0 && b + d >= 0
+                                    && a + c < widthCellCount
+                                    && b + d < heightCellCount) {
                                 neighbours.add(
                                         cells.get(a + c).get(b + d).getState());
                             }
