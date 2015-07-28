@@ -62,7 +62,7 @@ public class LifePanel extends JPanel {
     public LifePanel() {
         setLayout(new BorderLayout());
         for (int i = 0; i < widthCellCount; i++) {
-            final List<Cell> column = new ArrayList<>();
+            final List<Cell> column = new ArrayList<>(heightCellCount);
             for (int j = 0; j < heightCellCount; j++) {
                 column.add(new Cell(false));
             }
@@ -117,16 +117,9 @@ public class LifePanel extends JPanel {
      * Randomly generates a starting board.
      */
     public void random() {
-        cells = new ArrayList<>(widthCellCount);
-        List<Cell> column = new ArrayList<>(heightCellCount);
         final Random rand = new Random();
-        for (int i = 0; i < widthCellCount; i++) {
-            column = new ArrayList<>(heightCellCount);
-            for (int j = 0; j < heightCellCount; j++) {
-                column.add(new Cell(rand.nextBoolean()));
-            }
-            cells.add(column);
-        }
+        cells.parallelStream().flatMap(column -> column.parallelStream())
+                .forEach(cell -> cell.setState(rand.nextBoolean()));
         setNeighbours();
         repaint();
     }
