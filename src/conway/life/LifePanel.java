@@ -39,17 +39,19 @@ public class LifePanel extends JPanel {
     /**
      * Number of cells that can fit the width of the screen.
      */
-    private final int widthCellCount = (int) size.getWidth() / cellSize + 1;
+    private static final int widthCellCount = (int) size.getWidth() / cellSize
+            + 1;
 
     /**
      * Number of cells that can fit the height of the screen.
      */
-    private final int heightCellCount = (int) size.getHeight() / cellSize + 1;
+    private static final int heightCellCount = (int) size.getHeight() / cellSize
+            + 1;
 
     /**
      * 2D list of cells.
      */
-    private List<List<Cell>> cells = new ArrayList<>(widthCellCount);
+    private final List<List<Cell>> cells = new ArrayList<>(widthCellCount);
 
     /**
      * Timer for the panel.
@@ -68,7 +70,6 @@ public class LifePanel extends JPanel {
             }
             cells.add(column);
         }
-        setNeighbours();
 
         final LifeMouseListener listener = new LifeMouseListener(this);
         addMouseListener(listener);
@@ -92,17 +93,14 @@ public class LifePanel extends JPanel {
                 startButton.setText("Stop");
             }
         });
-
         nextButton.addActionListener(ae -> {
             timer.getTask().run();
         });
-
         randButton.addActionListener(ae -> {
             random();
             timer.stop();
             startButton.setText("Start");
         });
-
         exitButton.addActionListener(ae -> System.exit(0));
 
         menu.add(startButton);
@@ -118,9 +116,8 @@ public class LifePanel extends JPanel {
      */
     public void random() {
         final Random rand = new Random();
-        cells.parallelStream().flatMap(column -> column.parallelStream())
-                .forEach(cell -> cell.setState(rand.nextBoolean()));
-        setNeighbours();
+        cells.forEach(column -> column
+                .forEach(cell -> cell.setState(rand.nextBoolean())));
         repaint();
     }
 
@@ -129,10 +126,11 @@ public class LifePanel extends JPanel {
      * cells and adds them to a list which is sent to the cell for counting.
      */
     public void setNeighbours() {
+        final int maxNeighbours = 8;
         List<Boolean> neighbours;
         for (int a = 0; a < widthCellCount; a++) {
             for (int b = 0; b < heightCellCount; b++) {
-                neighbours = new ArrayList<>(8);
+                neighbours = new ArrayList<>(maxNeighbours);
                 for (int c = -1; c < 2; c++) {
                     for (int d = -1; d < 2; d++) {
                         if (c == 0 && d == 0) {
